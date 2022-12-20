@@ -9,8 +9,8 @@
     <Features>nullablePublicOnly;strict</Features>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" Version="1.0.0-beta.59" PrivateAssets="All" />
-  </ItemGroup>
+  </ItemGroup> -->
 
 </Project>
