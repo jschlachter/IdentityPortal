@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="IdentityPortal" ToolsVersion="15.0">
+  <Include Path="Documentation.ruleset" Action="Default" />
+  <Include Path="StyleCop.ruleset" Action="Default" />
+</RuleSet>

@@ -4,8 +4,8 @@ using Serilog;
 using Serilog.Events;
 
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
     .WriteTo.File("logs/host-.log",
-        LogEventLevel.Debug,
         rollingInterval: RollingInterval.Day,
         fileSizeLimitBytes: 1_000_000,
         rollOnFileSizeLimit: true,
@@ -27,20 +27,19 @@ try
     builder.Host.UseSerilog((ctx, config) =>
     {
         config
-            .MinimumLevel.Is(ctx.HostingEnvironment.IsProduction() ? LogEventLevel.Warning : LogEventLevel.Debug)
-            .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
             .WriteTo.File("logs/application-.log",
                 rollingInterval: RollingInterval.Day,
                 fileSizeLimitBytes: 1_000_000,
                 rollOnFileSizeLimit: true,
                 shared: true,
                 flushToDiskInterval: TimeSpan.FromSeconds(1)
-            );
+            )
+            .Enrich.FromLogContext()
+            .ReadFrom.Configuration(ctx.Configuration);
 
         if (ctx.HostingEnvironment.IsDevelopment())
         {
-            config.WriteTo.Console(
-                restrictedToMinimumLevel: LogEventLevel.Information);
+            config.WriteTo.Console();
         }
     });
 
@@ -64,8 +63,6 @@ try
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-
-    app.MapGet("/", () => "Hello World!");
 
     app.Run();
 }

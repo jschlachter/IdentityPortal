@@ -7,6 +7,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Nullable>enable</Nullable>
     <Features>nullablePublicOnly;strict</Features>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)..\rulesets\IdentityPortal.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <!-- <ItemGroup>
