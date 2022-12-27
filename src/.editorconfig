@@ -8,7 +8,7 @@ root = false
 dotnet_diagnostic.CA1001.severity = error
 
 # CA2007: Consider calling ConfigureAwait on the awaited task
-dotnet_diagnostic.CA2007.severity = error
+dotnet_diagnostic.CA2007.severity = silent
 
 # CA2016: Forward the 'CancellationToken' parameter to methods that take one
 dotnet_diagnostic.CA2016.severity = error
