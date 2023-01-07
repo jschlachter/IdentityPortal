@@ -28,20 +28,26 @@ try
     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
     builder.Services.AddIdentityServer((options) => {
+        options.Events.RaiseErrorEvents = true;
+        options.Events.RaiseInformationEvents = true;
+        options.Events.RaiseFailureEvents = true;
+        options.Events.RaiseSuccessEvents = true;
+
         options.EmitStaticAudienceClaim = true;
     })
     .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddInMemoryApiScopes(Config.ApiScopes)
-    .AddInMemoryClients(Config.Clients);
+    .AddInMemoryClients(Config.Clients)
+    .AddTestUsers(TestUsers.Users);
 
     // ...
     JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
     builder.Services
     .AddAuthorization((options) => {
-        // options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        //     .RequireAuthenticatedUser()
-        //     .Build();
+        options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
     })
     .AddAuthentication((options) => {
         options.DefaultScheme = "Cookies";
@@ -49,11 +55,12 @@ try
     })
     .AddCookie("Cookies")
     .AddOpenIdConnect("oidc", (options) => {
-        options.Authority = "";
+        options.Authority = "https://localhost:8080";
 
         options.ClientId = "portal";
-        options.ClientSecret = "";
+        options.ClientSecret = "secret";
         options.ResponseType = "code";
+        options.UsePkce = false;
 
         options.Scope.Clear();
         options.Scope.Add("openid");

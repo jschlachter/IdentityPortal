@@ -5,6 +5,13 @@ namespace IdentityPortal.Models;
 
 public class LoginViewModel
 {
+    public LoginViewModel(string? returnUrl)
+    {
+        Input = new LoginModel{ ReturnUrl = returnUrl };
+    }
+
+    public LoginModel Input { get; set; }
+
     public bool AllowRememberLogin { get; set; } = true;
     public bool EnableLocalLogin { get; set; } = true;
     public IEnumerable<LoginViewModel.ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
