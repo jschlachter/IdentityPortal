@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form asp-page="/Account/Login/Index">
+                        <form method="post" asp-action="login" asp-controller="account">
                             <input type="hidden" asp-for="Input.ReturnUrl" />
 
                             <div class="form-group">

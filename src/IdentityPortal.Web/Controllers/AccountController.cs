@@ -51,8 +51,9 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginModel model)
+    public async Task<IActionResult> Login(LoginViewModel view)
     {
+        var model = view.Input;
         var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
         // the user clicked the "cancel" button
@@ -97,7 +98,8 @@ public class AccountController : Controller
                 // issue authentication cookie with subject ID and username
                 var isuser = new IdentityServerUser(user.SubjectId)
                 {
-                    DisplayName = user.Username
+                    DisplayName = user.Username,
+
                 };
 
                 await HttpContext.SignInAsync(isuser, props);

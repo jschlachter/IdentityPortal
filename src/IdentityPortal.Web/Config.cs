@@ -8,7 +8,9 @@ public static class Config
         new IdentityResource[]
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResources.Email(),
+            new IdentityResources.Address()
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -23,7 +25,7 @@ public static class Config
             new Client
             {
                 ClientId = "portal",
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.Hybrid,
                 RequirePkce = false,
                 ClientSecrets =
                 {
@@ -33,7 +35,7 @@ public static class Config
                 FrontChannelLogoutUri = "https://localhost:8080/signout-oidc",
                 PostLogoutRedirectUris = { "https://localhost:8080/signout-callback-oidc" },
                 AllowOfflineAccess = true,
-                AllowedScopes = { "openid", "profile", "scope1" }
+                AllowedScopes = { "openid", "profile", "scope1","email" }
             }
         };
 }

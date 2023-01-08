@@ -13,6 +13,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return Content("Hello World!");
+        var user = HttpContext.User.Identity;
+
+        return Content($"Hello {user.Name}!");
     }
 }

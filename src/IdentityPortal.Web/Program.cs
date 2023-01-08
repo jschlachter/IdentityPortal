@@ -1,6 +1,7 @@
 #pragma warning disable SA1200 // UsingDirectivesMustBePlacedWithinNamespace
 
 using System.IdentityModel.Tokens.Jwt;
+using IdentityModel;
 using IdentityPortal;
 using Microsoft.AspNetCore.Authorization;
 using Serilog;
@@ -35,10 +36,10 @@ try
 
         options.EmitStaticAudienceClaim = true;
     })
+    .AddTestUsers(TestUsers.Users)
     .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddInMemoryApiScopes(Config.ApiScopes)
-    .AddInMemoryClients(Config.Clients)
-    .AddTestUsers(TestUsers.Users);
+    .AddInMemoryClients(Config.Clients);
 
     // ...
     JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
@@ -59,14 +60,21 @@ try
 
         options.ClientId = "portal";
         options.ClientSecret = "secret";
-        options.ResponseType = "code";
+        options.ResponseType = "code id_token";
         options.UsePkce = false;
 
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
+        options.Scope.Add("email");
 
         options.SaveTokens = true;
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        options.TokenValidationParameters = new () {
+            NameClaimType = JwtClaimTypes.Name,
+            RoleClaimType = JwtClaimTypes.Role
+        };
     });
 
     builder.Host.UseSerilog((ctx, config) =>

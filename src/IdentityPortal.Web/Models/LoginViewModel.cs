@@ -5,6 +5,8 @@ namespace IdentityPortal.Models;
 
 public class LoginViewModel
 {
+    public LoginViewModel() : this("/") { }
+
     public LoginViewModel(string? returnUrl)
     {
         Input = new LoginModel{ ReturnUrl = returnUrl };
