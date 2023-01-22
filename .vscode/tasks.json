@@ -11,7 +11,7 @@
             },
             "args": [
                 "build",
-                "${workspaceFolder}/src/IdentityPortal.Web/IdentityPortal.Web.csproj",
+                "${workspaceFolder}/All.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A95B116D-5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityPortal.Tests", "test\IdentityPortal.Tests\IdentityPortal.Tests.csproj", "{FB6322A4-A57B-4892-A523-54F8462C9037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityPortal.EntityFramework", "src\IdentityPortal.EntityFramework\IdentityPortal.EntityFramework.csproj", "{5377BFAE-9A1F-46EC-B207-4A597716057F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +36,15 @@ Global
 		{FB6322A4-A57B-4892-A523-54F8462C9037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB6322A4-A57B-4892-A523-54F8462C9037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB6322A4-A57B-4892-A523-54F8462C9037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5377BFAE-9A1F-46EC-B207-4A597716057F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5377BFAE-9A1F-46EC-B207-4A597716057F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5377BFAE-9A1F-46EC-B207-4A597716057F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5377BFAE-9A1F-46EC-B207-4A597716057F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2673E6E6-2303-4DB2-BA2D-CA8471799018} = {E5EF0660-5651-4D2C-A940-3800439529E4}
 		{F3D5F17C-5344-4469-A0F5-3BEB1EC45B7D} = {E5EF0660-5651-4D2C-A940-3800439529E4}
 		{FB6322A4-A57B-4892-A523-54F8462C9037} = {A95B116D-55A3-4F57-B3E2-04744D7B41A9}
+		{5377BFAE-9A1F-46EC-B207-4A597716057F} = {E5EF0660-5651-4D2C-A940-3800439529E4}
 	EndGlobalSection
 EndGlobal
