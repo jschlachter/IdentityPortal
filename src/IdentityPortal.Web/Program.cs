@@ -3,9 +3,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using IdentityModel;
 using IdentityPortal;
+using IdentityPortal.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Serilog;
-using Serilog.Events;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -27,6 +27,10 @@ try
     //
     // Add services to the container.
     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+    builder.Services.AddDbContext<IdentityPortalDbContext>((options) => {
+
+    });
 
     builder.Services.AddIdentityServer((options) => {
         options.Events.RaiseErrorEvents = true;

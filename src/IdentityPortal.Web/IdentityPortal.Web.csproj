@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IdentityPortal\IdentityPortal.csproj" />
+    <ProjectReference Include="..\IdentityPortal.EntityFramework\IdentityPortal.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
