@@ -1,10 +1,12 @@
 #pragma warning disable SA1200 // UsingDirectivesMustBePlacedWithinNamespace
 
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using IdentityModel;
 using IdentityPortal;
 using IdentityPortal.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -28,8 +30,21 @@ try
     // Add services to the container.
     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-    builder.Services.AddDbContext<IdentityPortalDbContext>((options) => {
 
+    builder.Services.AddIdentityPortalDbContext((storeOptions) =>
+    {
+        var provider = builder.Configuration.GetValue("Provider", "SqlServer");
+        var connectionString = builder.Configuration.GetConnectionString("IdentityPortal");
+
+        if (connectionString.IsMissing()) {
+            throw new ArgumentNullException("ConnectionString");
+        }
+
+        storeOptions.ConfigureDbContext = (options) => _ = provider switch {
+            "Postgres" => options.UseNpgsql(connectionString, x => x.MigrationsAssembly("IdentityPortal.PostgresMigrations")),
+            "SqlServer" => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("IdentityPortal.SqlMigrations")),
+            _ => throw new Exception($"Unsupported provider: {provider}")
+        };
     });
 
     builder.Services.AddIdentityServer((options) => {
@@ -124,6 +139,7 @@ try
 
     app.Run();
 }
+catch (OperationCanceledException) {}
 catch (Exception ex)
 {
     Log.Fatal(ex, "Unknown error occured on startup");

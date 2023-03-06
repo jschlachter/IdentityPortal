@@ -4,7 +4,7 @@ public class IdentityPortalUser : AuditableEntity
 {
     public IdentityPortalUser()
     {
-        Tenants = new List<IdentityPortalTenant>();
+        IsActive = true;
         Roles = new List<IdentityPortalRole>();
     }
 
@@ -20,8 +20,6 @@ public class IdentityPortalUser : AuditableEntity
     public string? PhoneNumber { get; set; }
     public bool PhoneNumberConfirmed { get; set; }
     public bool TwoFactorEnabled { get; set; }
-
-    public List<IdentityPortalTenant> Tenants { get; set; }
-
+    public bool IsActive { get; set; }
     public List<IdentityPortalRole> Roles { get; set; }
 }

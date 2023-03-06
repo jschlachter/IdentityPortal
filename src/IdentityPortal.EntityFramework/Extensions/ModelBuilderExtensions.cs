@@ -46,28 +46,19 @@ public static class ModelBuilderExtensions
             tenant.Property(t => t.Name).HasMaxLength(75).IsRequired();
             tenant.Property(t => t.IsActive).IsRequired();
 
+            tenant.IsAuditable();
+
             //
             // Table & Columns
             tenant.ToTable(storeOptions.Tenants);
             tenant.Property(t => t.Id).HasColumnName("id");
+            tenant.Property(t => t.IsActive).HasColumnName("active");
             tenant.Property(t => t.ApiKey).HasColumnName("api_Key");
             tenant.Property(t => t.Name).HasColumnName("tenant_name");
 
             //
             // Relationships
-            tenant.HasMany(tenant => tenant.Users).WithMany(user => user.Tenants)
-                .UsingEntity<IdentityPortalTenantUser>(
-                    j => j.HasOne(tu => tu.User).WithMany().HasForeignKey("user_id"),
-                    j => j.HasOne(tu => tu.Tenant).WithMany().HasForeignKey("tenant_id"),
-                    j => {
-                        j.IsAuditable();
-                        j.ToTable(storeOptions.TenantUsers);
-                    }
-                );
-
-            tenant.HasIndex(t => t.Name)
-                .HasDatabaseName("IX_IdenityPortalTenant_TenantName")
-                .HasFilter("[active] = 1");
+            tenant.HasMany(tenant => tenant.Roles).WithOne(role => role.Tenant).HasForeignKey("tenant_id");
         });
 
         modelBuilder.Entity<IdentityPortalRole>(role =>
@@ -108,7 +99,7 @@ public static class ModelBuilderExtensions
             user.Property(t => t.PasswordHash);
             user.Property(t => t.PhoneNumberConfirmed).IsRequired();
             user.Property(t => t.ConcurrencyStamp).IsConcurrencyToken();
-
+            user.Property(t => t.IsActive).IsRequired();
             user.IsAuditable();
 
             //
@@ -127,11 +118,19 @@ public static class ModelBuilderExtensions
             user.Property(t => t.PhoneNumber).HasColumnName("phone_number");
             user.Property(t => t.PhoneNumberConfirmed).HasColumnName("phone_number_confirmed");
             user.Property(t => t.TwoFactorEnabled).HasColumnName("two_factor_enabled");
-
+            user.Property(t => t.IsActive).HasColumnName("active");
             user.HasIndex(t => t.UserName).HasDatabaseName("IX_IdentityPortalUser_UserName");
 
             //
             // Relationships
+            user.HasMany(user => user.Roles).WithMany(role => role.Users).UsingEntity<IdentityPortalUserRole>(
+                    j => j.HasOne(userRole => userRole.Role).WithMany().HasForeignKey("role_id").IsRequired(),
+                    j => j.HasOne(userRole => userRole.User).WithMany().HasForeignKey("user_id").IsRequired(),
+                    j => {
+                        j.IsAuditable();
+                        j.ToTable(storeOptions.UserRoles);
+                    }
+            );
         });
 
         modelBuilder.Entity<IdentityPortalTenant>();

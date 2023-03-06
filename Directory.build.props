@@ -1,15 +1,13 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    <DiscoverEditorConfigFiles>true</DiscoverEditorConfigFiles>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-
     <DebugType>portable</DebugType>
-
     <!-- disable warnings about architecture mismatch non issue for current projects -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)'==''">
     <Configuration>Debug</Configuration>
   </PropertyGroup>
@@ -21,7 +19,13 @@
     <IsUnitTestProject Condition="$(MSBuildProjectName.EndsWith('.Test'))">true</IsUnitTestProject>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EFCoreVersion>7.0.*</EFCoreVersion>
+    <EFCorePostgresVersion>7.0.*</EFCorePostgresVersion>
+    <EFCoreSqlVersion>7.0.*</EFCoreSqlVersion>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 </Project>

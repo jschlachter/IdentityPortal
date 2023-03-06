@@ -5,10 +5,11 @@ services:
     restart: "always"
     container_name: "idp_postgres"
     environment:
+      POSTGRES_DB: "IdentityPortal"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - 54320:5432
     volumes:
-      - idp_data:/mvar/lib/postgresql/data
+      - idp_data:/var/lib/postgresql/data
 volumes:
-  idp_data: 
+  idp_data:

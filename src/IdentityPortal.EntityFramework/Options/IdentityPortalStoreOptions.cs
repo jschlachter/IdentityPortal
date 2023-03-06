@@ -4,12 +4,6 @@ namespace IdentityPortal.EntityFramework.Options;
 
 public class IdentityPortalStoreOptions
 {
-    /// <summary>
-    /// Callback in DI resolve the EF DbContextOptions. If set, ConfigureDbContext will not be used.
-    /// </summary>
-    /// <value>
-    /// The configure database context.
-    /// </value>
     public Action<DbContextOptionsBuilder>? ConfigureDbContext { get; set; }
 
     /// <summary>
@@ -18,7 +12,7 @@ public class IdentityPortalStoreOptions
     /// <value>
     /// The default schema.
     /// </value>
-    public string? DefaultSchema { get; set; } = "dbo";
+    public string? DefaultSchema { get; set; } = "idp";
 
     /// <summary>
     /// Gets or set if EF DbContext pooling is enabled.
@@ -32,11 +26,11 @@ public class IdentityPortalStoreOptions
 
     //
     // TODO: Add TableConfiguration values
-    public TableConfiguration Users = new ("IdentityPortalUsers");
+    public TableConfiguration Users = new ("users");
 
-    public TableConfiguration Roles = new("IdentityPortalRole");
+    public TableConfiguration Roles = new("roles");
 
-    public TableConfiguration Tenants = new("IdentityPortalTenants");
+    public TableConfiguration Tenants = new("tenants");
 
-    public TableConfiguration TenantUsers = new("IdentityPortalTenantUsers");
+    public TableConfiguration UserRoles = new("user_roles");
 }
